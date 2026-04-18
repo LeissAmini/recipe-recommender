@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="topbar">
+            <div class="brand">MealDash</div>
+            <div class="topbar-right">
+                <span class="top-link">Browse</span>
+                <span class="top-link">Saved</span>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-text">
+                <div class="hero-chip">Budget-friendly meals</div>
+                <h1>Find the best recipes with what you already have.</h1>
+                <p>
+                    Search by budget, pantry ingredients, and meal preference to get fast recipe matches.
+                </p>
+            </div>
+        </section>
+
+        <section class="search-panel">
+            <form action="/results" method="POST" class="search-form">
+                <div class="field-group">
+                    <label for="budget">Your budget</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">$</span>
+                        <input type="number" id="budget" name="budget" step="0.01" placeholder="Enter budget" required>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="pantry">Pantry ingredients</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">🥘</span>
+                        <input
+                            type="text"
+                            id="pantry"
+                            name="pantry"
+                            placeholder="chicken, rice, tomato"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="preference">Preference</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">⚡</span>
+                        <select id="preference" name="preference">
+                            <option value="any">Any</option>
+                            <option value="chicken">Chicken</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="quick">Quick</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="primary-btn">Get Recipes</button>
+            </form>
+
+            <div class="quick-filters">
+                <span class="filter-pill">Quick meals</span>
+                <span class="filter-pill">Vegetarian</span>
+                <span class="filter-pill">Low cost</span>
+                <span class="filter-pill">Pantry-friendly</span>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

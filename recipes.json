@@ -1,0 +1,51 @@
+[
+  {
+    "name": "Chicken Rice Bowl",
+    "ingredients": ["chicken", "rice", "soy sauce"],
+    "cost": 8,
+    "category": "chicken",
+    "prep_time": 20
+  },
+  {
+    "name": "Tomato Pasta",
+    "ingredients": ["pasta", "tomato", "garlic"],
+    "cost": 6,
+    "category": "vegetarian",
+    "prep_time": 15
+  },
+  {
+    "name": "Egg Fried Rice",
+    "ingredients": ["egg", "rice", "soy sauce"],
+    "cost": 5,
+    "category": "quick",
+    "prep_time": 10
+  },
+  {
+    "name": "Veggie Wrap",
+    "ingredients": ["tortilla", "lettuce", "tomato", "cheese"],
+    "cost": 7,
+    "category": "vegetarian",
+    "prep_time": 12
+  },
+  {
+    "name": "Grilled Chicken Salad",
+    "ingredients": ["chicken", "lettuce", "tomato", "cucumber"],
+    "cost": 9,
+    "category": "chicken",
+    "prep_time": 18
+  },
+  {
+    "name": "Bean Burrito",
+    "ingredients": ["beans", "tortilla", "cheese", "salsa"],
+    "cost": 6,
+    "category": "vegetarian",
+    "prep_time": 14
+  },
+  {
+    "name": "Garlic Noodles",
+    "ingredients": ["noodles", "garlic", "butter"],
+    "cost": 7,
+    "category": "quick",
+    "prep_time": 15
+  }
+]

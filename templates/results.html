@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="topbar">
+            <div class="brand">MealDash</div>
+            <a class="top-link" href="/">New Search</a>
+        </header>
+
+        <section class="results-hero">
+            <h1>Top recipe matches</h1>
+            <p>Here are your best results based on budget, pantry items, and preference.</p>
+
+            <div class="summary-row">
+                <div class="summary-pill">Budget: ${{ budget }}</div>
+                <div class="summary-pill">Preference: {{ preference }}</div>
+            </div>
+        </section>
+
+        {% if recipes %}
+            <section class="cards-grid">
+                {% for recipe in recipes %}
+                    <article class="recipe-card">
+                        <div class="recipe-image recipe-image-{{ loop.index }}">
+                            <span class="image-badge">{{ recipe.category }}</span>
+                        </div>
+
+                        <div class="recipe-content">
+                            <div class="recipe-header">
+                                <h2>{{ recipe.name }}</h2>
+                                <div class="price-tag">${{ recipe.cost }}</div>
+                            </div>
+
+                            <div class="meta-row">
+                                <span class="meta-pill">{{ recipe.prep_time }} mins</span>
+                                <span class="meta-pill">Score {{ recipe.score }}</span>
+                                <span class="meta-pill">{{ recipe.matches }} pantry matches</span>
+                            </div>
+
+                            <p class="section-label">Ingredients</p>
+                            <p class="recipe-text">{{ recipe.ingredients | join(', ') }}</p>
+
+                            <p class="section-label">Missing ingredients</p>
+                            <p class="recipe-text">
+                                {% if recipe.missing_ingredients %}
+                                    {{ recipe.missing_ingredients | join(', ') }}
+                                {% else %}
+                                    You already have everything for this recipe.
+                                {% endif %}
+                            </p>
+                        </div>
+                    </article>
+                {% endfor %}
+            </section>
+        {% else %}
+            <div class="empty-box">
+                <h2>No recipes found</h2>
+                <p>Try a bigger budget or broader preference.</p>
+            </div>
+        {% endif %}
+
+        <a class="back-link" href="/">← Back to search</a>
+    </div>
+</body>
+</html>
