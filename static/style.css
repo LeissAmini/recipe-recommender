@@ -46,11 +46,6 @@ body {
     letter-spacing: -0.5px;
 }
 
-.topbar-right {
-    display: flex;
-    gap: 20px;
-}
-
 .top-link {
     text-decoration: none;
     color: var(--text);
@@ -110,19 +105,66 @@ body {
     box-shadow: var(--shadow);
 }
 
+.error-box {
+    background: #fff1f0;
+    color: #b42318;
+    border: 1px solid #f5c2c0;
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    font-weight: 600;
+}
+
+.warning-box {
+    background: #fff7e6;
+    color: #9a6700;
+    border: 1px solid #f2d38b;
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    font-weight: 600;
+}
+
 .search-form {
     display: grid;
     grid-template-columns: 1.1fr 2fr 1.1fr auto;
     gap: 16px;
-    align-items: end;
+    align-items: start;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .field-group label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 0;
     font-size: 14px;
     font-weight: 700;
     color: #3c3c3c;
+}
+
+.helper-text {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.primary-btn {
+    height: 58px;
+    border: none;
+    border-radius: 18px;
+    background: var(--primary);
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    align-self: end;
 }
 
 .input-wrap {
@@ -179,7 +221,8 @@ select {
 .filter-pill,
 .summary-pill,
 .meta-pill,
-.image-badge {
+.image-badge,
+.best-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -189,9 +232,15 @@ select {
 
 .filter-pill {
     background: var(--pill);
+    border: none;
     padding: 10px 14px;
     font-size: 14px;
     color: #4b4b4b;
+    cursor: pointer;
+}
+
+.filter-pill:hover {
+    background: #f1e7df;
 }
 
 .summary-row {
@@ -229,11 +278,15 @@ select {
     transform: translateY(-4px);
 }
 
+.best-card {
+    border: 2px solid #ffd0c7;
+}
+
 .recipe-image {
     height: 180px;
     padding: 16px;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: flex-start;
 }
 
@@ -246,6 +299,13 @@ select {
 .image-badge {
     background: rgba(255, 255, 255, 0.95);
     color: #333;
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+.best-badge {
+    background: #111;
+    color: white;
     padding: 8px 12px;
     font-size: 13px;
 }
@@ -344,5 +404,10 @@ select {
     .results-hero,
     .search-panel {
         padding: 28px;
+    }
+
+    .results-warning {
+        margin-top: 18px;
+        margin-bottom: 0;
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Results</title>
+    <title>MealDash Results</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -19,16 +19,26 @@
 
             <div class="summary-row">
                 <div class="summary-pill">Budget: ${{ budget }}</div>
-                <div class="summary-pill">Preference: {{ preference }}</div>
+                <div class="summary-pill">Preference: {{ preference|capitalize }}</div>
+                <div class="summary-pill">Pantry: {{ pantry }}</div>
             </div>
+
+            {% if invalid_ingredients %}
+                <div class="warning-box results-warning">
+                    Ignored unknown ingredients: {{ invalid_ingredients | join(', ') }}
+                </div>
+            {% endif %}
         </section>
 
         {% if recipes %}
             <section class="cards-grid">
                 {% for recipe in recipes %}
-                    <article class="recipe-card">
+                    <article class="recipe-card {% if loop.first %}best-card{% endif %}">
                         <div class="recipe-image recipe-image-{{ loop.index }}">
                             <span class="image-badge">{{ recipe.category }}</span>
+                            {% if loop.first %}
+                                <span class="best-badge">Best Match</span>
+                            {% endif %}
                         </div>
 
                         <div class="recipe-content">
@@ -43,15 +53,15 @@
                                 <span class="meta-pill">{{ recipe.matches }} pantry matches</span>
                             </div>
 
-                            <p class="section-label">Ingredients</p>
+                            <p class="section-label">Full ingredients</p>
                             <p class="recipe-text">{{ recipe.ingredients | join(', ') }}</p>
 
-                            <p class="section-label">Missing ingredients</p>
+                            <p class="section-label">You still need to buy</p>
                             <p class="recipe-text">
                                 {% if recipe.missing_ingredients %}
                                     {{ recipe.missing_ingredients | join(', ') }}
                                 {% else %}
-                                    You already have everything for this recipe.
+                                    Nothing — you already have everything.
                                 {% endif %}
                             </p>
                         </div>
@@ -61,7 +71,7 @@
         {% else %}
             <div class="empty-box">
                 <h2>No recipes found</h2>
-                <p>Try a bigger budget or broader preference.</p>
+                <p>Try increasing your budget or broadening your preference.</p>
             </div>
         {% endif %}
 
