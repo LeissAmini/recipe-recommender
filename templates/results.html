@@ -19,15 +19,11 @@
 
             <div class="summary-row">
                 <div class="summary-pill">Budget: ${{ budget }}</div>
-                <div class="summary-pill">Preference: {{ preference|capitalize }}</div>
+                <div class="summary-pill">Cuisine: {{ cuisine|capitalize }}</div>
+                <div class="summary-pill">Diet: {{ "Vegetarian" if diet == "vegetarian" else "Any" }}</div>
+                <div class="summary-pill">Cook time: {{ cook_time|capitalize }}</div>
                 <div class="summary-pill">Pantry: {{ pantry }}</div>
             </div>
-
-            {% if invalid_ingredients %}
-                <div class="warning-box results-warning">
-                    Ignored unknown ingredients: {{ invalid_ingredients | join(', ') }}
-                </div>
-            {% endif %}
         </section>
 
         {% if recipes %}
@@ -35,7 +31,7 @@
                 {% for recipe in recipes %}
                     <article class="recipe-card {% if loop.first %}best-card{% endif %}">
                         <div class="recipe-image recipe-image-{{ loop.index }}">
-                            <span class="image-badge">{{ recipe.category }}</span>
+                            <span class="image-badge">{{ recipe.cuisine|capitalize }}</span>
                             {% if loop.first %}
                                 <span class="best-badge">Best Match</span>
                             {% endif %}
@@ -43,27 +39,43 @@
 
                         <div class="recipe-content">
                             <div class="recipe-header">
-                                <h2>{{ recipe.name }}</h2>
-                                <div class="price-tag">${{ recipe.cost }}</div>
+                                <h2>{{ recipe.recipe }}</h2>
+                                <div class="price-wrap">
+                                    <div class="price-tag">+${{ "%.2f"|format(recipe.additional_cost) }}</div>
+                                    <div class="price-total">est. total ${{ "%.2f"|format(recipe.price_estimate) }}</div>
+                                </div>
                             </div>
 
+                            {% if recipe.description %}
+                                <p class="recipe-description">{{ recipe.description }}</p>
+                            {% endif %}
+
                             <div class="meta-row">
-                                <span class="meta-pill">{{ recipe.prep_time }} mins</span>
-                                <span class="meta-pill">Score {{ recipe.score }}</span>
-                                <span class="meta-pill">{{ recipe.matches }} pantry matches</span>
+                                <span class="meta-pill cook-{{ recipe.cook_time }}">⏱ {{ recipe.cook_time|capitalize }}</span>
+                                <span class="meta-pill">{{ recipe.ingredients_owned }} pantry {{ "match" if recipe.ingredients_owned == 1 else "matches" }}</span>
+                                <span class="meta-pill">BN: {{ (recipe.bn_score * 100)|round|int }}%</span>
                             </div>
 
                             <p class="section-label">Full ingredients</p>
                             <p class="recipe-text">{{ recipe.ingredients | join(', ') }}</p>
 
                             <p class="section-label">You still need to buy</p>
-                            <p class="recipe-text">
-                                {% if recipe.missing_ingredients %}
-                                    {{ recipe.missing_ingredients | join(', ') }}
+                            <p class="recipe-text missing-text">
+                                {% if recipe.ingredients_needed %}
+                                    {{ recipe.ingredients_needed | join(', ') }}
                                 {% else %}
-                                    Nothing — you already have everything.
+                                    <span class="have-all">Nothing — you already have everything.</span>
                                 {% endif %}
                             </p>
+
+                            {% if recipe.instructions %}
+                                <button class="instructions-toggle" onclick="toggleInstructions(this)">▸ Show Instructions</button>
+                                <div class="instructions-content">
+                                    {% for step in recipe.instructions.split('\n') %}
+                                        <p>{{ step }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
                     </article>
                 {% endfor %}
@@ -71,11 +83,19 @@
         {% else %}
             <div class="empty-box">
                 <h2>No recipes found</h2>
-                <p>Try increasing your budget or broadening your preference.</p>
+                <p>Try increasing your budget or broadening your preferences.</p>
             </div>
         {% endif %}
 
         <a class="back-link" href="/">← Back to search</a>
     </div>
+
+    <script>
+        function toggleInstructions(btn) {
+            const content = btn.nextElementSibling;
+            const isOpen = content.classList.toggle('open');
+            btn.textContent = isOpen ? '▾ Hide Instructions' : '▸ Show Instructions';
+        }
+    </script>
 </body>
 </html>

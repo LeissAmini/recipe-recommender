@@ -27,12 +27,6 @@
                 <div class="error-box">{{ error }}</div>
             {% endif %}
 
-            {% if invalid_ingredients %}
-                <div class="warning-box">
-                    Ignored unknown ingredients: {{ invalid_ingredients | join(', ') }}
-                </div>
-            {% endif %}
-
             <form action="/results" method="POST" class="search-form" id="recipeForm">
                 <div class="field-group">
                     <label for="budget">Your budget</label>
@@ -59,25 +53,47 @@
                             type="text"
                             id="pantry"
                             name="pantry"
-                            placeholder="chicken, rice, tomato"
+                            placeholder="chicken, rice, garlic"
                             value="{{ pantry }}"
                             required
                         >
                     </div>
-                    <p class="helper-text">
-                        Enter ingredients separated by commas. Try: {{ ingredient_examples }}
-                    </p>
                 </div>
 
                 <div class="field-group">
-                    <label for="preference">Preference</label>
+                    <label for="cuisine">Cuisine</label>
                     <div class="input-wrap">
-                        <span class="input-icon">⚡</span>
-                        <select id="preference" name="preference" required>
-                            <option value="any" {% if preference == "any" %}selected{% endif %}>Any</option>
-                            <option value="chicken" {% if preference == "chicken" %}selected{% endif %}>Chicken</option>
-                            <option value="vegetarian" {% if preference == "vegetarian" %}selected{% endif %}>Vegetarian</option>
-                            <option value="quick" {% if preference == "quick" %}selected{% endif %}>Quick</option>
+                        <span class="input-icon">🌍</span>
+                        <select id="cuisine" name="cuisine" required>
+                            <option value="any" {% if cuisine == "any" %}selected{% endif %}>Any</option>
+                            <option value="asian" {% if cuisine == "asian" %}selected{% endif %}>Asian</option>
+                            <option value="italian" {% if cuisine == "italian" %}selected{% endif %}>Italian</option>
+                            <option value="mexican" {% if cuisine == "mexican" %}selected{% endif %}>Mexican</option>
+                            <option value="american" {% if cuisine == "american" %}selected{% endif %}>American</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="diet">Diet</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">🥗</span>
+                        <select id="diet" name="diet" required>
+                            <option value="none" {% if diet == "none" %}selected{% endif %}>Any</option>
+                            <option value="vegetarian" {% if diet == "vegetarian" %}selected{% endif %}>Vegetarian</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label for="cook_time">Cook time</label>
+                    <div class="input-wrap">
+                        <span class="input-icon">⏱</span>
+                        <select id="cook_time" name="cook_time" required>
+                            <option value="any" {% if cook_time == "any" %}selected{% endif %}>Any</option>
+                            <option value="short" {% if cook_time == "short" %}selected{% endif %}>Short (&lt;30 min)</option>
+                            <option value="medium" {% if cook_time == "medium" %}selected{% endif %}>Medium (30-60 min)</option>
+                            <option value="long" {% if cook_time == "long" %}selected{% endif %}>Long (&gt;60 min)</option>
                         </select>
                     </div>
                 </div>
